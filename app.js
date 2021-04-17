@@ -3,10 +3,8 @@
 function buildMetaData(sample_id) {
     d3.json(url).then(function(data){
         console.log(data);
-    
          var sample = data.samples[0]
         // console.log(sample);
-    
          var sample_values = sample.sample_values
         // console.log(sample_values)
          var otu_ids = sample.otu_ids
@@ -15,19 +13,17 @@ function buildMetaData(sample_id) {
         // console.log(otu_labels)
         var start = Object.values(data.metadata)
         console.log(start)
-       
+        var start_meta = start.filter(method => method.id ==sample_id)
+        console.log(start_meta)
          
      });
 }
 
-
 function buildCharts(sample_id){
     d3.json(url).then(function(data){
         console.log(data);
-    
          var sample = data.samples[0]
         // console.log(sample);
-    
          var sample_values = sample.sample_values
         // console.log(sample_values)
          var otu_ids = sample.otu_ids
@@ -39,7 +35,6 @@ function buildCharts(sample_id){
     });
 }
 
-d3.selectAll("#selDataset").on("change",buildMetaData)
 
 function init() {
     var selector = d3.select("#selDataset")
@@ -72,6 +67,7 @@ function init() {
 
 function optionChanged(sample_id){
     // call build chart and build metadata with the sample_id
+    buildMetaData(sample_id)
 }
 
 init()
