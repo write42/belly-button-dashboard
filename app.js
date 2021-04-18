@@ -22,16 +22,25 @@ function buildMetaData(sample_id) {
 function buildCharts(sample_id){
     d3.json(url).then(function(data){
         console.log(data);
-         var sample = data.samples[0]
+         var sample = data.samples.filter(x => x.id==sample_id)[0]
         // console.log(sample);
-         var sample_values = sample.sample_values
+         var sample_values = sample.sample_values.slice(0,10)
         // console.log(sample_values)
-         var otu_ids = sample.otu_ids
-         var otu_labels = sample.otu_labels
+         var otu_ids = sample.otu_ids.slice(0,10)
+         var otu_labels = sample.otu_labels.slice(0,10)
         //console.log(otu_ids)
-        // console.log(otu_labels)
+        //console.log(otu_labels)
         var start = Object.values(data.metadata)
-        console.log(start)
+        //console.log(start)
+        var trace1 = {
+            x: sample_values,
+            y: otu_ids,
+            text: otu_labels,
+            type:"bar",
+            orientation: 'h'
+        };
+        var graph1 = [trace1];
+        Plotly.newPlot('bar',graph1)
     });
 }
 
@@ -63,6 +72,7 @@ function init() {
 
     });
    buildMetaData(940)
+   buildCharts(940)
 }
 
 function optionChanged(sample_id){
