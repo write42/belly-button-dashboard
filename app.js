@@ -22,25 +22,66 @@ function buildMetaData(sample_id) {
 function buildCharts(sample_id){
     d3.json(url).then(function(data){
         console.log(data);
-         var sample = data.samples.filter(x => x.id==sample_id)[0]
-        // console.log(sample);
-         var sample_values = sample.sample_values.slice(0,10)
-        // console.log(sample_values)
-         var otu_ids = sample.otu_ids.slice(0,10)
-         var otu_labels = sample.otu_labels.slice(0,10)
-        //console.log(otu_ids)
-        //console.log(otu_labels)
-        var start = Object.values(data.metadata)
-        //console.log(start)
-        var trace1 = {
-            x: sample_values,
-            y: otu_ids,
-            text: otu_labels,
-            type:"bar",
-            orientation: 'h'
-        };
-        var graph1 = [trace1];
-        Plotly.newPlot('bar',graph1)
+        var result = data.samples.filter(sampleObj => sampleObj.id==sample_id)[0]
+        console.log(resultArray);
+
+        var otu_ids = result.otu_ids
+        var otu_labels = result.otu_labels
+        var sample_values = result.sample_values
+
+        // bubble chart
+        var bubbleLayout = {
+            xaxis:{title:'OTU ID'}
+        }
+
+        var bubbleData = [
+            {
+                x: otu_ids,
+                y: sample_values,
+                text: otu_labels,
+                mode:'markers',
+                markers:{
+                    size: sample_values,
+                    color: otu_ids,
+                    colorscale: True
+                }
+            }
+        ]
+
+        Plotly.newPlot("bubble", bubbleData, bubbleLayout)
+
+        var yticks = 
+
+        
+        var barLayout = {
+
+        }
+
+        var barData = [
+
+        ]
+
+
+        Plotly.newPlot("bar", barData, barLayout)
+
+        // bar chart
+        //  var sample_values = sample.sample_values.slice(0,10)
+        // // console.log(sample_values)
+        //  var otu_ids = sample.otu_ids.slice(0,10)
+        //  var otu_labels = sample.otu_labels.slice(0,10)
+        // //console.log(otu_ids)
+        // //console.log(otu_labels)
+        // var start = Object.values(data.metadata)
+        // //console.log(start)
+        // var trace1 = [{
+        //     values: sample_values,
+        //     labels: otu_ids,
+        //     type:'bar'
+        // }];
+
+       
+
+        // Plotly.newPlot('bar',trace1)
     });
 }
 
