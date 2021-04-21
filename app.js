@@ -54,12 +54,16 @@ function buildCharts(sample_id){
 
         
         var barLayout = {
+            title: "Belly Button Bar Chart"
+        };
 
-        }
-
-        var barData = [
-
-        ]
+        var barData = [{
+            type: 'bar',
+            x: sample_values,
+            y: otu_ids,
+            text: ,
+            orientation: 'h'
+        }];
 
 
         Plotly.newPlot("bar", barData, barLayout)
@@ -78,9 +82,6 @@ function buildCharts(sample_id){
         //     labels: otu_ids,
         //     type:'bar'
         // }];
-
-       
-
         // Plotly.newPlot('bar',trace1)
     });
 }
