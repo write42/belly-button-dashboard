@@ -25,10 +25,14 @@ function buildCharts(sample_id){
         var result = data.samples.filter(sampleObj => sampleObj.id==sample_id)[0]
         console.log(result);
 
-        var otu_ids = result.otu_ids.slice(0,10)
+        console.log(result.otu_ids.slice(0,10))
+        var otu_ids = result.otu_ids.slice(0,10).toString().split(',')
         var otu_labels = result.otu_labels.slice(0,10)
         var sample_values = result.sample_values.slice(0,10)
-
+        var otu_ids_full = result.otu_ids
+        var otu_labels_full = result.otu_labels
+        var sample_values_full = result.sample_values
+        console.log(otu_ids)
         // bubble chart
         var bubbleLayout = {
             xaxis:{title:'OTU ID'}
@@ -36,14 +40,14 @@ function buildCharts(sample_id){
 
         var bubbleData = [
             {
-                x: otu_ids,
-                y: sample_values,
-                text: otu_labels,
+                x: otu_ids_full,
+                y: sample_values_full,
+                text: otu_labels_full,
                 mode:'markers',
-                markers:{
-                    size: sample_values,
-                    color: otu_ids
-                    //colorscale: True
+                marker:{
+                    size: sample_values_full,
+                    color: otu_ids_full,
+                    colorscale: ''
                 }
             }
         ]
@@ -60,9 +64,9 @@ function buildCharts(sample_id){
 
         var barData = [{
             type: 'bar',
-            x: sample_values,
-            y: otu_ids,
-            text: otu_labels,
+            x: sample_values.reverse(),
+            y: otu_ids.reverse(),
+            text: otu_labels.reverse(),
             orientation: 'h'
         }];
 
@@ -118,6 +122,7 @@ function init() {
 function optionChanged(sample_id){
     // call build chart and build metadata with the sample_id
     buildMetaData(sample_id)
+    buildCharts(sample_id)
 }
 
 init()
