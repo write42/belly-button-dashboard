@@ -1,4 +1,5 @@
  const url = "samples.json";
+var panel = d3.select('.panel-body')
 
 function buildMetaData(sample_id) {
     d3.json(url).then(function(data){
@@ -15,7 +16,14 @@ function buildMetaData(sample_id) {
         console.log(start)
         var start_meta = start.filter(method => method.id ==sample_id)
         console.log(start_meta)
-         
+        var initial_meta = start_meta[0]
+        panel.html("")
+        console.log(initial_meta)
+            Object.entries(initial_meta).forEach(function([key,value]){
+                var cell = panel.append("h5");
+                cell.text(`${key}: ${value}`);
+                
+            });
      });
 }
 
@@ -26,7 +34,8 @@ function buildCharts(sample_id){
         console.log(result);
 
         console.log(result.otu_ids.slice(0,10))
-        var otu_ids = result.otu_ids.slice(0,10).toString().split(',')
+        var otu_ids = result.otu_ids.slice(0,10).toString().split(',').map(x=>"OTU "+x)
+        console.log(otu_ids)
         var otu_labels = result.otu_labels.slice(0,10)
         var sample_values = result.sample_values.slice(0,10)
         var otu_ids_full = result.otu_ids
